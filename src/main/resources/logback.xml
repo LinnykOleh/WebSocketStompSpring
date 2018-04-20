@@ -1,0 +1,34 @@
+<configuration>
+
+	<jmxConfigurator/>
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>[%d{dd/MM/yy HH:mm:ss.SSS}] %-5p [%.15t] [%c{1}] %X{PROCESSING_CONTEXT} %m%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${sq.webapp.logdir}/sqe-admin-cmt-webapp.log</file>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${sq.webapp.logdir}/archives/sqe-admin-cmt-webapp_%d{yyyyMMdd}_%i.gz</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy
+					class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>100MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+
+		<encoder>
+			<pattern>[%d{dd/MM/yy HH:mm:ss.SSS}] %-5p [%.15t] [%c{1}] %X{PROCESSING_CONTEXT} %m%n</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="com.swissquote.eforex.admin.cmt" level="INFO"/>
+	<logger name="org.springframework.messaging" level="DEBUG" />
+
+	<root name="ROOT" level="INFO">
+		<appender-ref ref="STDOUT"/>
+		<appender-ref ref="FILE"/>
+	</root>
+</configuration>
